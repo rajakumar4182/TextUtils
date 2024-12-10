@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import './App.css';
-// import About from './components/About';
+import About from './components/About';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import Alert from './components/Alert';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
   const [mode, setMode] = useState('light'); //whether dark mode is enabled or not
@@ -44,12 +50,22 @@ function App() {
     <>
       {/* <Navbar title ='TextUtils' aboutText='About TextUtils'/> */}
       {/* <Navbar title ='TextUtils'/>  -- if we don't pass aboutText then value is being fetched through default Props which is written in Navbar.js*/}
+      <Router>
       <Navbar title ='TextUtils' aboutText='About TextUtils' mode ={mode} toggleMode={toggleMode}/>
       <Alert alert={alert}/>
       <div className="container my-3">
-        <TextForm showAlert={showAlert} heading = "Enter the text to analyze below" mode ={mode}/>
-      {/* <About/> */}
+        {/* in place of Switch now using Routes */}
+      <Routes>
+        {/* /user -->component 1
+            /user/home --> -->component 2 */}
+          <Route exact path="/about" element={<About />} >
+          </Route>
+          <Route exact path="/" element={<TextForm showAlert={showAlert} heading = "Enter the text to analyze below" mode ={mode}/>}>
+            
+          </Route>
+        </Routes>
       </div>
+      </Router>
     </>
     
   );
